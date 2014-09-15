@@ -1,9 +1,6 @@
 int longestValidParentheses(string s) {
 	int max = 0;
-	int curStart = 0;
-	int curValid = 0;
 	stack<pair<char, int>> st;//存储字符和它出现的位置
-
 	vector<pair<int, int>> validPairs;//存储合理的括号对的左右位置，（（））会记录两次分别是(1,2) (0,3)
 	//因此需要在最后的扫描过程中判断
 	int i = 0;
@@ -11,9 +8,7 @@ int longestValidParentheses(string s) {
 	while (i < s.length())
 	{
 		if (s[i] == '(')
-		{
 			st.push(make_pair('(', i));
-		}
 		else
 		{
 			if (!st.empty() && st.top().first == '(')
@@ -21,11 +16,6 @@ int longestValidParentheses(string s) {
 				int left = st.top().second;
 				st.pop();
 				validPairs.push_back(make_pair(left, i));
-			}
-			else
-			{
-				curValid = 0;
-				curStart = i + 1;
 			}
 		}
 		i += 1;
