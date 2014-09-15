@@ -1,4 +1,4 @@
-int sqrt2(int x)
+int sqrt(int x)
 {
 	
 	
