@@ -4,7 +4,7 @@ using namespace std;
 void getNext(char* pattern, int* next)
 {
 	
-	int i = 0, j = -1;
+	int i = 0, j = -1;//set j to be -1
 	int len = strlen(pattern);
 	next[0] = -1;
 	while (i < len)
@@ -17,7 +17,9 @@ void getNext(char* pattern, int* next)
 			next[i] = j;
 		}
 		else
-			j = next[j];
+			j = next[j];//if patten[i]!=pattern[j] then set j = next[j];
+		//for example pattern is "heohejheoheo",when i == 11 then we find that j!=-1 and j!=o 
+		//then find that we set j=2(he==he),because the length of commom substring can never overflow "heohe"
 	}
 	for (int i = 0; i < len; i++)
 	{
@@ -32,7 +34,7 @@ void find(char* pattern, char * str)
 	int i = 0, j = 0, lenP = strlen(pattern), lenS = strlen(str);
 	while (true)
 	{
-		if (j==-1||pattern[j] == str[i])
+		if (j==-1||pattern[j] == str[i])//here we must deal with the same method like getNext
 		{
 			i++;
 			j++;
