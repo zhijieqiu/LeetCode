@@ -18,16 +18,13 @@ public:
     		    dp[1] = 1;
     		if(ss[1]=='0'&&ss[0]>='3')//like 3011 
     		    return 0;
-    		
     	}
     	for (int i = 2; i < length; i++)
     	{
     		if (s[i] == '0')
     		{
     			if (s[i - 1] == '1' || s[i - 1] == '2')
-    			{
     				dp[i] = dp[i - 2];
-    			}
     			else
     				return 0;
     		}
@@ -43,7 +40,6 @@ public:
     				else
     					dp[i] = dp[i - 1];
     			}
-    			
     		}
     	}
     	return dp[length - 1];
