@@ -21,9 +21,9 @@ public:
             }
             else{
                 if(num[mid]>num[left])// 0 1 
-                    left++;
+                    left = mid;
                 else 
-                    right--;
+                    right = mid;
             }
         }
         return num[mid];
