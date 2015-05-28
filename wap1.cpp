@@ -90,6 +90,80 @@ int main(){
     return 0;
     
 }
+/////////////////////华丽分割线
+//
+//  main.cpp
+//  WAP
+//
+//  Created by jackqiu on 15/5/28.
+//  Copyright (c) 2015年 jackqiu. All rights reserved.
+//
+
+#include <cstdio>
+#include <memory.h>
+#include <algorithm>
+#include <iostream>
+using namespace std;
+const int size = 510;
+int dp[510][510];
+int upper[510][510];
+int down[510][510];
+int matrix[510][510];
+//dp[i][j] 到某个点的最大收益值，
+//dp[i][j] = max(dp[k][j-1]+dis(k,i)) k==1..n
+#define MIN 0x80000000
+int n,m;
+/*
+ test case 1:
+ 4 4
+ -1 4 5 1
+ 2 -1 2 4
+ 3 3 -1 3
+ 4 2 1 2
+ 
+ test case 2:
+ 4 4
+ -1 4 5 1
+ 2 -1 2 4
+ 3 3 -1 -1
+ 4 2 1 2
+ */
+int main(){
+    scanf("%d%d",&n,&m);
+    memset(dp,0,sizeof(dp));
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            scanf("%d",&matrix[i][j]);
+        }
+    }//what about all paths is -1
+    for(int col=1;col<=m;col++){
+        for(int row=1;row<=n;row++){
+            int t =max(down[row-1][col],dp[row][col-1]);
+            if(t==INT_MIN) down[row][col] = INT_MIN;
+            else down[row][col] = t+matrix[row][col];
+            if(matrix[row][col]==-1) down[row][col] = INT_MIN;
+        }
+        for(int row=n;row>=1;row--){
+            int t =max(upper[row+1][col],dp[row][col-1]);
+            if(t==INT_MIN) upper[row][col] = INT_MIN;
+            else upper[row][col]= t+matrix[row][col];
+            if(matrix[row][col]==-1) upper[row][col] = INT_MIN;
+        }
+        for(int row=1;row<=n;row++)
+            dp[row][col]=max(upper[row][col],down[row][col]);
+        if(dp[1][col]==INT_MIN&&dp[n][col]!=INT_MIN)
+            matrix[1][col]==-1?dp[1][col]=INT_MIN:dp[1][col] = matrix[1][col];
+        if(dp[n][col]==INT_MIN&&dp[1][col]!=INT_MIN)
+            matrix[n][col]==-1?dp[n][col]=INT_MIN:dp[n][col] = matrix[n][col];
+    }
+    int maxPoints = INT_MIN;
+    for(int i=1;i<=n;i++){
+        maxPoints = max(maxPoints,dp[i][m]);
+    }
+    cout<<maxPoints<<endl;
+    return 0;
+    
+}
 
 
 
